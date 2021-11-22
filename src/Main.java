@@ -78,4 +78,11 @@ public class Main {
         return choice;
     }
 
+    public static String userString(){
+        Scanner userChoice = new Scanner(System.in);
+        String answer = userChoice.nextLine();
+
+        return answer;
+    }
+
 }

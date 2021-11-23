@@ -10,9 +10,10 @@ public class Main {
 
 
     // TODO ANDREA
-    // Guest
-    // Staff (change name, String title (director, cleaning person, etc.), pn and salary)
-    // HUMAN-PERSON-BEING
+    // Guest : First/last name, telephone number, address
+
+
+
 
     // TODO NICO
     // Make a MENU:
@@ -73,7 +74,7 @@ public class Main {
         try {
             choice = userChoice.nextInt();
         } catch (InputMismatchException e){
-            System.out.println("Hey man, write a number");
+            System.out.println("\n! Please write a number !\n");
         }
         return choice;
     }

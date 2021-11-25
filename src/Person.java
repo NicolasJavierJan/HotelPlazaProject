@@ -10,8 +10,4 @@ public abstract class Person {
         this.lastName=lastName;
         this.phoneNumber = phoneNumber;
     }
-
-    public abstract void createPerson();
-    public abstract void modifyPerson();
-
 }

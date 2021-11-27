@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Main {
 
+    // Change to type Staff
     public static ArrayList<Person> staffMembers = new ArrayList<>();
 
     // Classes:
@@ -11,20 +12,13 @@ public class Main {
     // Room (change price, booking)
     // Bookings (start date, end date, room number, Guest)
 
-
     // TODO ANDREA
     // Guest : First/last name, telephone number, address
 
-
-
-
     // TODO NICO
-    // Make a MENU:
     // Create ROOM
     // Create Guest
-    // Create Staff
     // Create Booking
-    // ENDPROGRAM
 
     public static void main(String[] args) {
         menu();
@@ -79,7 +73,6 @@ public class Main {
                     System.out.println("Choose a number from the list!");
             }
         }
-
     }
 
     public static int userChoice(){
@@ -151,6 +144,8 @@ public class Main {
         String staffMember = Main.userString();
         boolean isFound = false;
 
+        // Change type of the Arraylist to Staff.
+        // Take out the typecasting.
         for (Person staff : staffMembers) {
             isFound = true;
             if (staff instanceof Staff) {

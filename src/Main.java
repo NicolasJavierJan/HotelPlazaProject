@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -6,6 +7,7 @@ public class Main {
 
     // Change to type Staff
     public static ArrayList<Person> staffMembers = new ArrayList<>();
+    public static ArrayList<Person> guests = new ArrayList<>();
 
     // Classes:
     // TODO JASMIN
@@ -22,55 +24,50 @@ public class Main {
 
     public static void main(String[] args) {
         menu();
+
     }
 
     public static void menu(){
 
-        boolean keepAsking = true;
+            System.out.println("\n----- Main Menu -----\n" +
+                    "· 1. Create booking" +
+                    "\n· 2. Guest options" +
+                    "\n· 3. Staff options" +
+                    "\n· 4. Room options" +
+                    "\n· 9. Exit");
 
-        while (keepAsking) {
-            System.out.println("This is the Main Menu");
-            System.out.println("Press 1 to create a Booking.");
-            System.out.println("Administration options:");
-            System.out.println("Press 2 for creating a new Guest");
-            System.out.println("Press 3 for adding a new Room");
-            System.out.println("Press 4 for adding new Staff");
-            System.out.println("Press 9 for Exiting!");
-
+            boolean keepAsking = true;
+            while (keepAsking) {
             int choice = userChoice();
 
             switch (choice) {
+
                 case 1:
-                    System.out.println("CREATING BOOKINGGGGGG");
+
+                    System.out.println("----- Create Booking -----");
                     keepAsking = false;
                     break;
+
                 case 2:
-                    System.out.println("CREATING GUESSSSST");
+                    Guest.menu();
+                    keepAsking = false;
+                        break;
+                case 3:
+                    Staff.menu();
                     keepAsking = false;
                     break;
-                case 3:
+
+                case 4:
                     System.out.println("ADDING ROOOOOMMMMMMM");
                     keepAsking = false;
                     break;
-                case 4:
-                    System.out.println("Press 1 to Create a new Staff member");
-                    System.out.println("Press 2 to Edit a Staff member");
-                    System.out.println("Another number (except 0) will take you back to the Main Menu");
-                    int answer = userChoice();
-                    if (answer == 1){
-                        createStaff();
-                    } else if (answer == 2){
-                        modifyStaff();
-                    } else {
-                        break;
-                    }
-                    keepAsking = false;
-                    break;
+
                 case 9:
                     System.out.println("Goodbye! ☺");
                     System.exit(0);
+
                 default:
-                    System.out.println("Choose a number from the list!");
+                    System.out.println("\n! Choose a number from the list !");
             }
         }
     }
@@ -82,10 +79,10 @@ public class Main {
                 Scanner userChoice = new Scanner(System.in);
                 choice = userChoice.nextInt();
                 if (choice == 0){
-                    System.out.println("Number can't be 0. Please try again.");
+                    System.out.println("\n! Number can't be 0. Please try again. !");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("\n! Please write a number !\n");
+                System.out.println("\n! Please write a number !");
             }
         }
         return choice;
@@ -98,108 +95,23 @@ public class Main {
         return answer;
     }
 
-    public static void createStaff(){
+    // Prints a sequence of number with a white space every two numbers
+    public static String phonePrint(int phoneNumber){
 
-        System.out.println("\nFill the following fields to 'create' a new staff member:");
-        System.out.println("\n· Enter first name: ");
-        String staffFirstName = Main.userString();
+        String phoneNumberString = String.valueOf(phoneNumber);
+        String phonePrint = "";
+        int chCount= 0;
 
-        System.out.println("\n· Enter last name: ");
-        String staffLastName = Main.userString();
+        for (int i = 0; i<phoneNumberString.length(); i++){
+            phonePrint = phonePrint + phoneNumberString.charAt(i);
+            chCount++;
 
-        System.out.println("\n· Enter phone number (+45):");
-        int staffPhoneNumber = Main.userChoice();
-
-        System.out.println("\n· Enter title: ");
-        String staffTitle = Main.userString();
-
-
-        System.out.println("\n· Enter salary per month: ");
-        int staffSalary = Main.userChoice();
-
-        Staff newStaffMember = new Staff (staffFirstName, staffLastName, staffPhoneNumber, staffTitle, staffSalary);
-
-        staffMembers.add(newStaffMember);
-
-        System.out.println("\nYou have registered a new staff member with the following information: " +
-                "\n- First Name: " + newStaffMember.firstName +
-                "\n- Last Name: " + newStaffMember.lastName +
-                "\n- Title: " + newStaffMember.getTitle() +
-                "\n- Phone Number: " + newStaffMember.phoneNumber +
-                "\n- Salary: " + newStaffMember.getSalary() + " DKK");
-
-        menu();
-    }
-
-    public static void modifyStaff(){
-
-        System.out.println("\nList of staff members: ");
-
-        for (Person staff : staffMembers){
-            System.out.println("- " + staff.firstName + " ");
-        }
-
-        System.out.println("\nSearch for staff member first name: ");
-
-        String staffMember = Main.userString();
-        boolean isFound = false;
-
-        // Change type of the Arraylist to Staff.
-        // Take out the typecasting.
-        for (Person staff : staffMembers) {
-            isFound = true;
-            if (staff instanceof Staff) {
-                Staff found = (Staff) staff;
-
-                System.out.println("\n· Enter staff member new first name: ");
-                String newFirstName = Main.userString();
-                found.firstName = newFirstName;
-
-                System.out.println("\n· Enter staff member new last name: ");
-                String newLastName = Main.userString();
-                found.lastName = newLastName;
-
-                System.out.println("\n· Enter staff member new phone number: (+45) ");
-                int newPhoneNumber = Main.userChoice();
-                found.phoneNumber = newPhoneNumber;
-
-                System.out.println("\n· Enter staff member new title: ");
-                String newTitle = Main.userString();
-                found.setTitle(newTitle);
-
-                System.out.println("\n· Enter staff member new salary per hour: (DKK)");
-                int newSalary = Main.userChoice();
-                found.setSalary(newSalary);
-
-                System.out.println("\nYou have modified " + staffMember + "'s information to: " +
-                        "\n- First Name: " + found.firstName +
-                        "\n- Last Name: " + found.lastName +
-                        "\n- Title: " + found.getTitle() +
-                        "\n- Phone Number: " + staff.phoneNumber +
-                        "\n- Salary: " + found.getSalary() + " DKK per hour");
-
-                menu();
+            if (chCount == 2){
+                phonePrint = phonePrint + " ";
+                chCount = 0;
             }
         }
-        if (!isFound){
-            System.out.println("\n !  Staff member not found ! \n");
-
-            boolean elseLoop = true;
-            while(elseLoop) {
-
-                System.out.println("\nDo you want to search for another staff member?");
-                String answer = userString();
-                if (answer.equalsIgnoreCase("yes")) {
-                    modifyStaff();
-                    elseLoop = false;
-                } else if (answer.equalsIgnoreCase("no")) {
-                    elseLoop = false;
-                    // Redirect somewhere
-                    menu();
-                } else {
-                    System.out.println("\n ! Please answer with yes or no !\n");
-                }
-            }
-        }
+        return phonePrint;
     }
+
 }

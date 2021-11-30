@@ -5,22 +5,13 @@ import java.util.Scanner;
 
 public class Main {
 
-    // Change to type Staff
-    public static ArrayList<Person> staffMembers = new ArrayList<>();
-    public static ArrayList<Person> guests = new ArrayList<>();
-
-    // Classes:
-    // TODO JASMIN
-    // Room (change price, booking)
-    // Bookings (start date, end date, room number, Guest)
-
-    // TODO ANDREA
-    // Guest : First/last name, telephone number, address
+    public static ArrayList<Staff> staffMembers = new ArrayList<>();
+    public static ArrayList<Guest> guests = new ArrayList<>();
 
     // TODO NICO
     // Create ROOM
-    // Create Guest
     // Create Booking
+    // Edit Booking
 
     public static void main(String[] args) {
         menu();

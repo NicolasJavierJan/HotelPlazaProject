@@ -211,7 +211,7 @@ public class Staff extends Person {
 
         System.out.println("\nList of staff members: ");
 
-        for (Person staff : Main.staffMembers){
+        for (Staff staff : Main.staffMembers){
             System.out.println("- " + staff.firstName + " ");
         }
 
@@ -222,12 +222,11 @@ public class Staff extends Person {
 
         // Change type of the Arraylist to Staff.
         // Take out the typecasting.
-        for (Person staff : Main.staffMembers) {
+        for (Staff staff : Main.staffMembers) {
             if (staffMember.equalsIgnoreCase(staff.firstName)){
 
             isFound = true;
-                if (staff instanceof Staff) {
-                    Staff found = (Staff) staff;
+                    Staff found = staff;
 
                     boolean keepAsking = true;
                     while (keepAsking) {
@@ -333,7 +332,6 @@ public class Staff extends Person {
                     }
                 }
             }
-        }
         if (!isFound){
             System.out.println("\n !  Staff member not found !");
             System.out.println("\nDo you want to search for another staff member?" +

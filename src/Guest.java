@@ -197,7 +197,7 @@ public class Guest extends Person{
 
         System.out.println("\nList of guests: ");
 
-        for (Person guest : Main.guests){
+        for (Guest guest : Main.guests){
             System.out.println("- " + guest.firstName + " ");
         }
 
@@ -207,13 +207,12 @@ public class Guest extends Person{
         boolean isFound = false;
         // Change type of the Arraylist to Guest.
         // Take out the typecasting.
-        for (Person guest: Main.guests) {
+        for (Guest guest: Main.guests) {
             if (guestName.equalsIgnoreCase(guest.firstName)) {
 
                 isFound = true;
-                if (guest instanceof Guest) {
 
-                    Guest found = (Guest) guest;
+                    Guest found = guest;
 
                     boolean keepAsking = true;
                     while(keepAsking) {
@@ -311,7 +310,6 @@ public class Guest extends Person{
                     }
                 }
             }
-        }
         if (!isFound){
 
             System.out.println("\n !  Guest not found !");

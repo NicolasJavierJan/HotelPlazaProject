@@ -7,9 +7,10 @@ public class Main {
 
     public static ArrayList<Staff> staffMembers = new ArrayList<>();
     public static ArrayList<Guest> guests = new ArrayList<>();
+    public static ArrayList<Booking> bookings = new ArrayList<>();
+    public static ArrayList<Room> rooms = new ArrayList<>();
 
     // TODO NICO
-    // Create ROOM
     // Create Booking
     // Edit Booking
 
@@ -36,6 +37,7 @@ public class Main {
                 case 1:
 
                     System.out.println("----- Create Booking -----");
+                    Booking.menu();
                     keepAsking = false;
                     break;
 
@@ -49,7 +51,7 @@ public class Main {
                     break;
 
                 case 4:
-                    System.out.println("ADDING ROOOOOMMMMMMM");
+                    Room.menu();
                     keepAsking = false;
                     break;
 
@@ -84,6 +86,25 @@ public class Main {
         String answer = userChoice.nextLine();
 
         return answer;
+    }
+
+    public static boolean userBoolean(){
+        boolean keepAsking = true;
+        System.out.println("Please enter 'yes' or 'no'");
+        while (keepAsking) {
+            Scanner userBoolean = new Scanner(System.in);
+            String answer = userBoolean.nextLine();
+            if (answer.equalsIgnoreCase("yes")) {
+                keepAsking = false;
+                return true;
+            } else if (answer.equalsIgnoreCase("no")) {
+                keepAsking = false;
+                return false;
+            } else {
+                System.out.println("Please write 'yes' or 'no'");
+            }
+        }
+        return false;
     }
 
     // Prints a sequence of number with a white space every two numbers

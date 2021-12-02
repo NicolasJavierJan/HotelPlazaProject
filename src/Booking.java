@@ -1,20 +1,22 @@
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Booking {
-    // Add GUEST
-    // TODO
-    // Bookings (start date, end date, room number, Guest)
     private LocalDate startDate;
     private LocalDate endDate;
     private int numberOfNights;
     private Room room;
+    private Guest guest;
 
-    public Booking(LocalDate start, LocalDate end, int numberOfNights, Room room) {
+    public Booking(LocalDate start, LocalDate end, int numberOfNights, Room room, Guest guest) {
         this.numberOfNights = numberOfNights;
         this.startDate = start;
         this.endDate = end;
         this.room = room;
+        this.guest = guest;
     }
 
     public int getNumberOfNights() {
@@ -53,7 +55,15 @@ public class Booking {
             LocalDate start = validateDate(startDate, startMonth, startYear);
             LocalDate end = start.plus(Period.ofDays(numberOfNights));
             Room room = checkAvailability(start, end);
-            Booking newBooking = new Booking(start, end, numberOfNights, room);
+            if (room == null){
+                Main.menu();
+            }
+            Guest guest = guestChecking();
+            if (guest == null){
+                System.out.println("Something went wrong. Please try again");
+                Booking.menu();
+            }
+            Booking newBooking = new Booking(start, end, numberOfNights, room, guest);
             room.getBookings().add(newBooking);
             System.out.println(newBooking);
             Main.menu();
@@ -120,11 +130,16 @@ public class Booking {
 
     public static Room checkAvailability(LocalDate start, LocalDate end){
         boolean keepAsking = true;
+        if (Main.rooms.isEmpty()){
+            System.out.println("There are no rooms in the system. Please add rooms and come back");
+            return null;
+        }
         while (keepAsking){
             System.out.println("What type of room?");
             System.out.println("Press 1 for Single Bed");
             System.out.println("Press 2 for Double Bed");
             System.out.println("Press 3 for Suite");
+            System.out.println("Press 9 to Exit");
             int answer = Main.userChoice();
             boolean overlap = true;
             if (answer == 1){
@@ -151,18 +166,21 @@ public class Booking {
                 if (overlap){
                     System.out.println("There's no available Double Bed Rooms for that date.");
                 }
-            } else if (answer == 3){
-                for (Room room : Main.rooms){
-                    if (room.getRoomName().equalsIgnoreCase("Suite")){
+            } else if (answer == 3) {
+                for (Room room : Main.rooms) {
+                    if (room.getRoomName().equalsIgnoreCase("Suite")) {
                         overlap = checkOverlap(start, end, room);
-                        if (!overlap){
+                        if (!overlap) {
                             return room;
                         }
                     }
                 }
-                if (overlap){
+                if (overlap) {
                     System.out.println("There's no available Suite Rooms for that date.");
                 }
+                } else if (answer == 9){
+                    System.out.println("Going back to Menu");
+                    Booking.menu();
                 } else {
                 System.out.println("Please press a valid option");
             }
@@ -181,8 +199,47 @@ public class Booking {
         return false;
     }
 
+    public static Guest guestChecking(){
+        if (Main.guests.isEmpty()){
+            System.out.println("There are no guests in the System. Please add Guests");
+            Main.menu();
+        }
+        System.out.println("Please choose guest lastname from the List");
+        Set<String> lastNames = new HashSet<>();
+        for (Guest guest : Main.guests){
+            lastNames.add(guest.lastName);
+        }
+        System.out.println(lastNames);
+        String lastNameAnswer = Main.userString();
+        System.out.println("Please choose guest firstname from the List");
+        Set<String> firstNames = new HashSet<>();
+        for (Guest guest: Main.guests){
+            if (guest.lastName.equalsIgnoreCase(lastNameAnswer)){
+                firstNames.add(guest.firstName);
+            }
+        }
+        System.out.println(firstNames);
+        String firstNameAnswer = Main.userString();
+        for (Guest guest : Main.guests){
+            if (guest.lastName.equalsIgnoreCase(lastNameAnswer) && guest.firstName.equalsIgnoreCase(firstNameAnswer)){
+                return guest;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString(){
-        return this.startDate + " to " + this.endDate;
+        return "+-------------------------------------+\n" +
+                "|                                     |\n" +
+                "|             HOTEL PLAZA             |\n" +
+                "|                                     |\n" +
+                "|  " + this.room.getRoomName() + " Price per night: " + this.room.getPricePerNight() + "  |\n" +
+                "|  TOTAL                     " + this.room.getPricePerNight() * this.numberOfNights + "    |\n" +
+                "|                                     |\n" +
+                "|                                     |\n" +
+                "|                                     |\n" +
+                "|             THANK YOU!              |\n" +
+                "+-------------------------------------+";
     }
 }

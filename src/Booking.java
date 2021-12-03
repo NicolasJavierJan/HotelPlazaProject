@@ -19,12 +19,36 @@ public class Booking {
         this.guest = guest;
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
     public int getNumberOfNights() {
         return numberOfNights;
     }
 
     public void setNumberOfNights(int numberOfNights) {
         this.numberOfNights = numberOfNights;
+    }
+
+    public Guest getGuest() {
+        return guest;
+    }
+
+    public void setGuest(Guest guest) {
+        this.guest = guest;
     }
 
     public Room getRoom() {
@@ -43,69 +67,77 @@ public class Booking {
         int answer = Main.userChoice();
 
         if (answer == 1) {
-            System.out.println("Enter the Starting day");
-            int startDate = Main.userChoice();
-            System.out.println("Enter the Starting month");
-            int startMonth = validateStartMonth(Main.userChoice());
-            startDate = validateStartDate(startDate, startMonth);
-            System.out.println("Enter the Starting year");
-            int startYear = Main.userChoice();
-            System.out.println("Enter the number of nights for the stay");
-            int numberOfNights = Main.userChoice();
-            LocalDate start = validateDate(startDate, startMonth, startYear);
-            LocalDate end = start.plus(Period.ofDays(numberOfNights));
-            Room room = checkAvailability(start, end);
-            if (room == null){
-                Main.menu();
-            }
-            Guest guest = guestChecking();
-            if (guest == null){
-                System.out.println("Something went wrong. Please try again");
-                Booking.menu();
-            }
-            Booking newBooking = new Booking(start, end, numberOfNights, room, guest);
-            room.getBookings().add(newBooking);
-            Main.bookings.add(newBooking);
-            System.out.println(newBooking);
-            Main.menu();
+            Booking.createBooking();
         } else if (answer == 2) {
-            System.out.println("Enter the Guest last name");
-            String lastName = Main.userString();
-            System.out.println("Enter the Guest first name");
-            String firstName = Main.userString();
-            ArrayList<Booking> bookings = new ArrayList<>();
-            for (Booking booking : Main.bookings){
-                if (booking.guest.firstName.equalsIgnoreCase(firstName) && booking.guest.lastName.equalsIgnoreCase(lastName)){
-                    bookings.add(booking);
-                }
-            }
-            if (!bookings.isEmpty()){
-                int counter = 1;
-                for (Booking booking : bookings){
-                    System.out.println("Booking number " + counter);
-                    booking.printInfo();
-                    counter++;
-                }
-                System.out.println("Please enter the number of the booking to add days to:");
-                int bookingToAddDaysTo = Main.userChoice();
-                System.out.println("Please enter the days to add to the booking:");
-                int daysToAdd = Main.userChoice();
-                Booking extended = bookings.get(bookingToAddDaysTo - 1);
-                boolean canExtend = checkOverlap(extended.startDate, extended.endDate.plus(Period.ofDays(daysToAdd)), extended.room);
-                if (!canExtend){
-                    extended.endDate = extended.endDate.plus(Period.ofDays(daysToAdd));
-                    extended.printInfo();
-                } else {
-                    System.out.println("This reservation cannot be extended.");
-                    Booking.menu();
-                }
-
-            } else {
-                System.out.println("There's no booking under that name.");
-                Booking.menu();
-            }
+            Booking.editBooking();
         } else if (answer == 9) {
             Main.menu();
+        }
+    }
+
+    public static void createBooking(){
+        System.out.println("Enter the Starting day");
+        int startDate = Main.userChoice();
+        System.out.println("Enter the Starting month");
+        int startMonth = validateStartMonth(Main.userChoice());
+        startDate = validateStartDate(startDate, startMonth);
+        System.out.println("Enter the Starting year");
+        int startYear = Main.userChoice();
+        System.out.println("Enter the number of nights for the stay");
+        int numberOfNights = Main.userChoice();
+        LocalDate start = validateDate(startDate, startMonth, startYear);
+        LocalDate end = start.plus(Period.ofDays(numberOfNights));
+        Room room = checkAvailability(start, end);
+        if (room == null){
+            Main.menu();
+        }
+        Guest guest = guestChecking();
+        if (guest == null){
+            System.out.println("Something went wrong. Please try again");
+            Booking.menu();
+        }
+        Booking newBooking = new Booking(start, end, numberOfNights, room, guest);
+        room.getBookings().add(newBooking);
+        Main.bookings.add(newBooking);
+        System.out.println(newBooking);
+        Main.menu();
+    }
+
+    public static void editBooking(){
+        System.out.println("Enter the Guest last name");
+        String lastName = Main.userString();
+        System.out.println("Enter the Guest first name");
+        String firstName = Main.userString();
+        ArrayList<Booking> bookings = new ArrayList<>();
+        for (Booking booking : Main.bookings){
+            if (booking.guest.firstName.equalsIgnoreCase(firstName) && booking.guest.lastName.equalsIgnoreCase(lastName)){
+                bookings.add(booking);
+            }
+        }
+        if (!bookings.isEmpty()){
+            int counter = 1;
+            for (Booking booking : bookings){
+                System.out.println("Booking number " + counter);
+                booking.printInfo();
+                counter++;
+            }
+            System.out.println("Please enter the number of the booking to add days to:");
+            int bookingToAddDaysTo = Main.userChoice();
+            System.out.println("Please enter the days to add to the booking:");
+            int daysToAdd = Main.userChoice();
+            Booking extended = bookings.get(bookingToAddDaysTo - 1);
+            boolean canExtend = checkOverlap(extended.startDate, extended.endDate.plus(Period.ofDays(daysToAdd)), extended.room);
+            if (!canExtend){
+                extended.endDate = extended.endDate.plus(Period.ofDays(daysToAdd));
+                extended.printInfo();
+            } else {
+                System.out.println("This reservation cannot be extended.");
+                Booking.menu();
+            }
+
+        } else {
+            System.out.println("There's no booking under that name.");
+            Booking.menu();
         }
     }
 

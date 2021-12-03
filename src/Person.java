@@ -9,5 +9,4 @@ public abstract class Person {
         this.lastName=lastName;
         this.phoneNumber = phoneNumber;
     }
-
 }

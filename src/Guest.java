@@ -10,6 +10,13 @@ public class Guest extends Person{
         this.address = address;
     }
 
+    public void setAddress(String address){
+        this.address=address;
+    }
+    public String getAddress() {
+        return address;
+    }
+
     public static void menu() {
 
         System.out.println("\n----- Guest Options -----" +
@@ -340,11 +347,12 @@ public class Guest extends Person{
         }
     }
 
-    public void setAddress(String address){
-        this.address=address;
+    @Override
+    public String toString(){
+        return "\n" +
+                "\n- First name= " + firstName +
+                "\n- Last name= " + lastName +
+                "\n- Phone number= " + phoneNumber +
+                "\n- address='" + getAddress();
     }
-    public String getAddress() {
-        return address;
-    }
-
 }

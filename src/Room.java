@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 
 public class Room {
-    // Room (change price, booking)
+    // TODO
+    // Check if room flor and room number are already taken
+
     private int roomNumber;
     private int floor;
     private String roomName;
@@ -76,15 +78,7 @@ public class Room {
         this.bookings = bookings;
     }
 
-    @Override
-    public String toString(){
-        return this.getRoomName() + " " + this.pricePerNight;
-    }
-
     public static void menu(){
-        // Testing purposes only
-        System.out.println(Main.rooms);
-
         boolean keepAsking = true;
 
         while (keepAsking) {
@@ -184,4 +178,20 @@ public class Room {
         }
     }
 
+    @Override
+    public String toString(){
+        String internet = "";
+        if (withInternet){
+            internet = "yes";
+        } else {
+            internet = "no";
+        }
+        return "\n" +
+                "\n- Room= " + roomName +
+                "\n- Room Number= " + roomNumber +
+                "\n- Floor= " + floor +
+                "\n- Has Internet?= " + internet +
+                "\n- Number of beds= " + numberOfBeds +
+                "\n- Price per Night='" + pricePerNight;
+    }
 }

@@ -14,6 +14,20 @@ public class Staff extends Person {
         this.salary = salary;
     }
 
+    public String getTitle(){
+        return this.title;
+    }
+    public void setTitle(String title){
+        this.title = title;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
     public static void menu(){
         System.out.println("\n----- Staff Options -----" +
                     "\n· 1. Create new staff member" +
@@ -368,20 +382,6 @@ public class Staff extends Person {
                 "\n- Phone number= " + phoneNumber +
                 "\n- title='" + getTitle() +
                 "\n- salary=" + getSalary() + "DKK";
-    }
-
-    public void setTitle(String title){
-        this.title = title;
-    }
-    public String getTitle(){
-        return this.title;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-    public int getSalary() {
-        return salary;
     }
 
 }

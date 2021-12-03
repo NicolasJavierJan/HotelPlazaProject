@@ -65,13 +65,47 @@ public class Booking {
             }
             Booking newBooking = new Booking(start, end, numberOfNights, room, guest);
             room.getBookings().add(newBooking);
+            Main.bookings.add(newBooking);
             System.out.println(newBooking);
             Main.menu();
-
         } else if (answer == 2) {
+            System.out.println("Enter the Guest last name");
+            String lastName = Main.userString();
+            System.out.println("Enter the Guest first name");
+            String firstName = Main.userString();
+            ArrayList<Booking> bookings = new ArrayList<>();
+            for (Booking booking : Main.bookings){
+                if (booking.guest.firstName.equalsIgnoreCase(firstName) && booking.guest.lastName.equalsIgnoreCase(lastName)){
+                    bookings.add(booking);
+                }
+            }
+            if (!bookings.isEmpty()){
+                int counter = 1;
+                for (Booking booking : bookings){
+                    System.out.println("Booking number " + counter);
+                    booking.printInfo();
+                    counter++;
+                }
+                System.out.println("Please enter the number of the booking to add days to:");
+                int bookingToAddDaysTo = Main.userChoice();
+                System.out.println("Please enter the days to add to the booking:");
+                int daysToAdd = Main.userChoice();
+                Booking extended = bookings.get(bookingToAddDaysTo - 1);
+                boolean canExtend = checkOverlap(extended.startDate, extended.endDate.plus(Period.ofDays(daysToAdd)), extended.room);
+                if (!canExtend){
+                    extended.endDate = extended.endDate.plus(Period.ofDays(daysToAdd));
+                    extended.printInfo();
+                } else {
+                    System.out.println("This reservation cannot be extended.");
+                    Booking.menu();
+                }
 
+            } else {
+                System.out.println("There's no booking under that name.");
+                Booking.menu();
+            }
         } else if (answer == 9) {
-
+            Main.menu();
         }
     }
 
@@ -226,6 +260,12 @@ public class Booking {
             }
         }
         return null;
+    }
+
+    public void printInfo(){
+        System.out.println(this.guest);
+        System.out.println(this.room);
+        System.out.println(this.startDate + " to " + this.endDate);
     }
 
     @Override

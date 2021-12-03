@@ -10,13 +10,8 @@ public class Main {
     public static ArrayList<Booking> bookings = new ArrayList<>();
     public static ArrayList<Room> rooms = new ArrayList<>();
 
-    // TODO NICO
-    // Create Booking
-    // Edit Booking
-
     public static void main(String[] args) {
         menu();
-
     }
 
     public static void menu(){

@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Booking {
+public class Booking implements Serializable {
     private LocalDate startDate;
     private LocalDate endDate;
     private int numberOfNights;
@@ -99,7 +100,17 @@ public class Booking {
         Booking newBooking = new Booking(start, end, numberOfNights, room, guest);
         room.getBookings().add(newBooking);
         Main.bookings.add(newBooking);
-        System.out.println(newBooking);
+        System.out.println("+-------------------------------------+\n" +
+                "|                                     |\n" +
+                "|             HOTEL PLAZA             |\n" +
+                "|                                     |\n" +
+                "|  " + room.getRoomName() + " Price per night: " + room.getPricePerNight() + "  |\n" +
+                "|  TOTAL                     " + room.getPricePerNight() * numberOfNights + "    |\n" +
+                "|                                     |\n" +
+                "|                                     |\n" +
+                "|                                     |\n" +
+                "|             THANK YOU!              |\n" +
+                "+-------------------------------------+");
         Main.menu();
     }
 
@@ -302,16 +313,11 @@ public class Booking {
 
     @Override
     public String toString(){
-        return "+-------------------------------------+\n" +
-                "|                                     |\n" +
-                "|             HOTEL PLAZA             |\n" +
-                "|                                     |\n" +
-                "|  " + this.room.getRoomName() + " Price per night: " + this.room.getPricePerNight() + "  |\n" +
-                "|  TOTAL                     " + this.room.getPricePerNight() * this.numberOfNights + "    |\n" +
-                "|                                     |\n" +
-                "|                                     |\n" +
-                "|                                     |\n" +
-                "|             THANK YOU!              |\n" +
-                "+-------------------------------------+";
+        return "Room= " + this.room.getRoomName() +
+                "\n- Room Number= " + this.room.getRoomNumber() +
+                "\n- Floor= " + this.room.getFloor() +
+                "\n- Guest= " + this.guest.firstName + " " + this.guest.lastName +
+                "\n- Enter Date= " + this.startDate +
+                "\n- Check out date= " + this.endDate;
     }
 }

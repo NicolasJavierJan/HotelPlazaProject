@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Room {
+public class Room implements Serializable {
     // TODO
     // Check if room flor and room number are already taken
 
@@ -186,12 +187,11 @@ public class Room {
         } else {
             internet = "no";
         }
-        return "\n" +
-                "\n- Room= " + roomName +
+        return "Room= " + roomName +
                 "\n- Room Number= " + roomNumber +
                 "\n- Floor= " + floor +
                 "\n- Has Internet?= " + internet +
                 "\n- Number of beds= " + numberOfBeds +
-                "\n- Price per Night='" + pricePerNight;
+                "\n- Price per Night= " + pricePerNight;
     }
 }

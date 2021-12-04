@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -15,12 +16,51 @@ public class Main {
 
     public static void menu(){
 
+        // De-Serializing Code
+
+        try {
+            FileInputStream staffIn = new FileInputStream("src/Staff.ser");
+            FileInputStream guestsIn = new FileInputStream("src/Guests.ser");
+            FileInputStream bookingsIn = new FileInputStream("src/Bookings.ser");
+            FileInputStream roomsIn = new FileInputStream("src/Rooms.ser");
+
+            ObjectInputStream oisStaff = new ObjectInputStream(staffIn);
+            ObjectInputStream oisGuests = new ObjectInputStream(guestsIn);
+            ObjectInputStream oisBookings = new ObjectInputStream(bookingsIn);
+            ObjectInputStream oisRooms = new ObjectInputStream(roomsIn);
+
+            Main.staffMembers = (ArrayList) oisStaff.readObject();
+            Main.guests = (ArrayList) oisGuests.readObject();
+            Main.bookings = (ArrayList) oisBookings.readObject();
+            Main.rooms = (ArrayList) oisRooms.readObject();
+
+            oisStaff.close();
+            oisGuests.close();
+            oisBookings.close();
+            oisRooms.close();
+            staffIn.close();
+            guestsIn.close();
+            bookingsIn.close();
+            roomsIn.close();
+
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (ClassNotFoundException c){
+            c.printStackTrace();
+        }
+
+        // For checking that everything works correctly.
+        System.out.println(Main.staffMembers);
+        System.out.println(Main.guests);
+        System.out.println(Main.bookings);
+        System.out.println(Main.rooms);
+
             System.out.println("\n----- Main Menu -----\n" +
                     "· 1. Create booking" +
                     "\n· 2. Guest options" +
                     "\n· 3. Staff options" +
                     "\n· 4. Room options" +
-                    "\n· 9. Exit");
+                    "\n· 9. Save Changes and Exit!");
 
             boolean keepAsking = true;
             while (keepAsking) {
@@ -49,6 +89,39 @@ public class Main {
                     break;
 
                 case 9:
+                    // Serializing code.
+                    try {
+                        FileOutputStream fosStaff = new FileOutputStream("src/Staff.ser");
+                        ObjectOutputStream oosStaff = new ObjectOutputStream(fosStaff);
+
+                        oosStaff.writeObject(Main.staffMembers);
+                        oosStaff.close();
+                        fosStaff.close();
+
+                        FileOutputStream fosGuests = new FileOutputStream("src/Guests.ser");
+                        ObjectOutputStream oosGuests = new ObjectOutputStream(fosGuests);
+
+                        oosGuests.writeObject(Main.guests);
+                        oosGuests.close();
+                        fosGuests.close();
+
+                        FileOutputStream fosBookings = new FileOutputStream("src/Bookings.ser");
+                        ObjectOutputStream oosBookings = new ObjectOutputStream(fosBookings);
+
+                        oosBookings.writeObject(Main.bookings);
+                        oosBookings.close();
+                        fosBookings.close();
+
+                        FileOutputStream fosRooms = new FileOutputStream("src/Rooms.ser");
+                        ObjectOutputStream oosRooms = new ObjectOutputStream(fosRooms);
+
+                        oosRooms.writeObject(Main.rooms);
+                        oosRooms.close();
+                        fosRooms.close();
+
+                    } catch (IOException ioe){
+                        ioe.printStackTrace();
+                    }
                     System.out.println("Goodbye! ☺");
                     System.exit(0);
 

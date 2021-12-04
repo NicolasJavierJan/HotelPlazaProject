@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.lang.invoke.SwitchPoint;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class Staff extends Person {
+public class Staff extends Person implements Serializable {
 
     private String title;
     private int salary;
@@ -376,11 +377,10 @@ public class Staff extends Person {
 
     @Override
     public String toString() {
-        return "\n" +
-                "\n- First name= " + firstName +
+        return "First name= " + firstName +
                 "\n- Last name= " + lastName +
                 "\n- Phone number= " + phoneNumber +
-                "\n- title='" + getTitle() +
+                "\n- title=" + getTitle() +
                 "\n- salary=" + getSalary() + "DKK";
     }
 

@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
-public class Guest extends Person{
+public class Guest extends Person implements Serializable {
 
     private String address;
 
@@ -349,10 +350,9 @@ public class Guest extends Person{
 
     @Override
     public String toString(){
-        return "\n" +
-                "\n- First name= " + firstName +
+        return "First name= " + firstName +
                 "\n- Last name= " + lastName +
                 "\n- Phone number= " + phoneNumber +
-                "\n- address='" + getAddress();
+                "\n- Address= " + getAddress();
     }
 }

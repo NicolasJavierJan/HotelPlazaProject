@@ -71,7 +71,6 @@ public class Main {
             switch (choice) {
 
                 case 1:
-                    System.out.println("----- Create Booking -----");
                     Booking.menu();
                     keepAsking = false;
                     break;
@@ -128,7 +127,7 @@ public class Main {
                     System.exit(0);
 
                 default:
-                    System.out.println("\n! Choose a number from the list !");
+                    System.out.println("\n ! Choose a number from the list !");
             }
         }
     }
@@ -140,10 +139,10 @@ public class Main {
                 Scanner userChoice = new Scanner(System.in);
                 choice = userChoice.nextInt();
                 if (choice == 0){
-                    System.out.println("\n! Number can't be 0. Please try again. !");
+                    System.out.println("\n ! Number can't be 0. Please try again. !");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("\n! Please write a number !");
+                System.out.println("\n ! Please write a number !");
             }
         }
         return choice;
@@ -170,7 +169,7 @@ public class Main {
                 keepAsking = false;
                 return false;
             } else {
-                System.out.println("Please write 'yes' or 'no'");
+                System.out.println("\n ! Please write 'Yes' or 'No' !");
             }
         }
         return false;

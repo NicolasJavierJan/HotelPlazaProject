@@ -61,9 +61,11 @@ public class Booking implements Serializable {
     }
 
     public static void menu() {
-        System.out.println("Press 1 to create a new Booking");
-        System.out.println("Press 2 to extend a Booking");
-        System.out.println("Press 9 to Exit");
+
+        System.out.println("\n----- Create Booking -----" +
+                "\n· 1. Create booking" +
+                "\n· 2. Extend booking" +
+                "\n· Go back");
 
         int answer = Main.userChoice();
 
@@ -77,26 +79,103 @@ public class Booking implements Serializable {
     }
 
     public static void createBooking(){
-        System.out.println("Enter the Starting day");
-        int startDate = Main.userChoice();
-        System.out.println("Enter the Starting month");
-        int startMonth = validateStartMonth(Main.userChoice());
-        startDate = validateStartDate(startDate, startMonth);
-        System.out.println("Enter the Starting year");
-        int startYear = Main.userChoice();
-        System.out.println("Enter the number of nights for the stay");
-        int numberOfNights = Main.userChoice();
-        LocalDate start = validateDate(startDate, startMonth, startYear);
+
+        int startDay = 0;
+        int startMonth = 0;
+        int startYear = 0;
+        int numberOfNights = 0;
+
+        boolean enterDayLoop = true;
+        while(enterDayLoop) {
+
+            System.out.println("\n· Enter starting day:");
+            startDay = Main.userChoice();
+            if (startDay >= 1 && startDay <= 31) {
+                enterDayLoop = false;
+            } else {
+                System.out.println("\n ! The day has to be between 1 and 31, try again !");
+            }
+        }
+
+        boolean enterMonthLoop = true;
+        while (enterMonthLoop) {
+
+            //System.out.println("· Enter starting month");
+            //int startMonth = validateStartMonth(Main.userChoice());
+            //startMonth = Main.userChoice();
+
+            if (startDay == 30){
+
+                System.out.println("\nChoose one of the following months:" +
+                        "\n· 4. April" + "\n· 6. June" + "\n· 9. September" + "\n· 11. November");
+
+                startMonth = Main.userChoice();
+                if (startMonth == 4 || startMonth == 6 || startMonth == 9 || startMonth == 11){
+                    enterMonthLoop = false;
+                } else {
+                    System.out.println("\n ! Invalid answer, try again !");
+                }
+            } else if (startDay == 31){
+                System.out.println("\nChoose one of the following months:" +
+                        "\n· 1. January" + "\n· 3. March" + "\n· 5. May" + "\n· 7. July" +
+                        "\n· 8. August" + "\n· 10. October" + "\n· 12. December");
+
+                startMonth = Main.userChoice();
+
+                if (startMonth == 1 || startMonth == 3 || startMonth == 5  || startMonth == 7 || startMonth == 8 || startMonth == 10 || startMonth == 12 ){
+                    enterMonthLoop = false;
+                } else {
+                    System.out.println("\n ! Invalid answer, try again !");
+                }
+
+            } else {
+                System.out.println("\nChoose one of the following months:" +
+                        "\n· 1. January" + "\n· 2. February" + "\n· 3. March" + "\n· 4. April" + "\n· 5. May" + "\n· 6. June" +
+                        "\n· 7. July" + "\n· 8. August" + "\n· 9. September " + "\n· 10. October" + "\n· 11. November" + "\n· 12. December");
+
+                startMonth = Main.userChoice();
+
+                if (startMonth == 1 || startMonth == 2 || startMonth == 3  || startMonth == 4 || startMonth == 5 || startMonth == 6 ||
+                        startMonth == 7 || startMonth == 8 || startMonth == 9 || startMonth == 10 || startMonth == 11 || startMonth == 12){
+                    enterMonthLoop = false;
+                } else {
+                    System.out.println("\n ! Invalid answer, try again !");
+                }
+            }
+        }
+
+        // startDate = validateStartDate(startDate, startMonth);
+
+        boolean startYearLoop = true;
+        while (startYearLoop) {
+            System.out.println("\n· Enter year");
+            startYear = Main.userChoice();
+            if (startYear <= 2025 && startYear >= 2021) {
+                startYearLoop = false;
+            } else {
+                System.out.println("\n ! Invalid answer. Impossible to enter a year previous to 2021 !");
+            }
+        }
+
+        System.out.println("\n· Enter number of nights");
+        numberOfNights = Main.userChoice();
+        if (numberOfNights < 1){
+            System.out.println("\n ! Invalid answer. Please try again ! ");
+        }
+
+        LocalDate start = validateDate(startDay, startMonth, startYear);
         LocalDate end = start.plus(Period.ofDays(numberOfNights));
         Room room = checkAvailability(start, end);
+
         if (room == null){
             Main.menu();
         }
         Guest guest = guestChecking();
         if (guest == null){
-            System.out.println("Something went wrong. Please try again");
+            System.out.println("\n ! Something went wrong. Please try again ! ");
             Booking.menu();
         }
+
         Booking newBooking = new Booking(start, end, numberOfNights, room, guest);
         room.getBookings().add(newBooking);
         Main.bookings.add(newBooking);
@@ -104,13 +183,14 @@ public class Booking implements Serializable {
                 "|                                     |\n" +
                 "|             HOTEL PLAZA             |\n" +
                 "|                                     |\n" +
-                "|  " + room.getRoomName() + " Price per night: " + room.getPricePerNight() + "  |\n" +
+                "|  " + room.getRoomName() + " Price per night: " + (room.getPricePerNight() * numberOfNights) + "  |\n" +
                 "|  TOTAL                     " + room.getPricePerNight() * numberOfNights + "    |\n" +
                 "|                                     |\n" +
                 "|                                     |\n" +
                 "|                                     |\n" +
                 "|             THANK YOU!              |\n" +
                 "+-------------------------------------+");
+
         Main.menu();
     }
 
@@ -208,15 +288,17 @@ public class Booking implements Serializable {
     public static Room checkAvailability(LocalDate start, LocalDate end){
         boolean keepAsking = true;
         if (Main.rooms.isEmpty()){
-            System.out.println("There are no rooms in the system. Please add rooms and come back");
+            System.out.println("\n ! There are no rooms in the system. Please add rooms and come back !");
             return null;
         }
         while (keepAsking){
-            System.out.println("What type of room?");
-            System.out.println("Press 1 for Single Bed");
-            System.out.println("Press 2 for Double Bed");
-            System.out.println("Press 3 for Suite");
-            System.out.println("Press 9 to Exit");
+
+            System.out.println("\nWhat type of room?" +
+                    "\n· 1. Single bed" +
+                    "\n· 2. Double bed" +
+                    "\n· 3. Suite" +
+                    "\n· 9. Exit");
+
             int answer = Main.userChoice();
             boolean overlap = true;
             if (answer == 1){

@@ -50,10 +50,12 @@ public class Main {
         }
 
         // For checking that everything works correctly.
+        /*
         System.out.println(Main.staffMembers);
         System.out.println(Main.guests);
         System.out.println(Main.bookings);
         System.out.println(Main.rooms);
+        */
 
             System.out.println("\n----- Main Menu -----\n" +
                     "· 1. Create booking" +
@@ -156,7 +158,8 @@ public class Main {
 
     public static boolean userBoolean(){
         boolean keepAsking = true;
-        System.out.println("Please enter 'yes' or 'no'");
+        System.out.println("· Yes" +
+                "\n· No");
         while (keepAsking) {
             Scanner userBoolean = new Scanner(System.in);
             String answer = userBoolean.nextLine();

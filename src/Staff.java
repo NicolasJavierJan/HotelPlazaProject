@@ -31,7 +31,7 @@ public class Staff extends Person implements Serializable {
 
     public static void menu(){
         System.out.println("\n----- Staff Options -----" +
-                    "\n· 1. Create new staff member" +
+                    "\n· 1. Create staff member" +
                     "\n· 2. Edit staff member" +
                     "\n· 9. Main menu");
 

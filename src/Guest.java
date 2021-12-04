@@ -21,7 +21,7 @@ public class Guest extends Person implements Serializable {
     public static void menu() {
 
         System.out.println("\n----- Guest Options -----" +
-                    "\n· 1. Create new guest" +
+                    "\n· 1. Create guest" +
                     "\n· 2. Edit guest" +
                     "\n· 9. Main menu");
 

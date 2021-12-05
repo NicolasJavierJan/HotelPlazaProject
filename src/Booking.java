@@ -182,17 +182,17 @@ public class Booking implements Serializable {
         Booking newBooking = new Booking(start, end, numberOfNights, room, guest);
         room.getBookings().add(newBooking);
         Main.bookings.add(newBooking);
-        System.out.println("+-----------------------------------------+\n" +
-                "|                                         |\n" +
-                "|               HOTEL PLAZA               |\n" +
-                "|                                         |\n" +
-                "|    " + room.getRoomName() + " Price per night: " + (room.getPricePerNight() * numberOfNights) + "dkk     |\n" +
-                "|    TOTAL:                    " + room.getPricePerNight() * numberOfNights + "dkk       |\n" +
-                "|                                         |\n" +
-                "|                                         |\n" +
-                "|                                         |\n" +
-                "|               THANK YOU!                |\n" +
-                "+-----------------------------------------+");
+        System.out.println("+---------------------------------------------+\n" +
+                "|                                             |\n" +
+                "|               HOTEL PLAZA                   |\n" +
+                "|                                             |\n" +
+                "|    " + room.getRoomName() + " Price per night: " + (room.getPricePerNight() * numberOfNights) + "dkk       |\n" +
+                "|    TOTAL:                     " + room.getPricePerNight() * numberOfNights + "dkk        |\n" +
+                "|                                             |\n" +
+                "|                                             |\n" +
+                "|                                             |\n" +
+                "|               THANK YOU!                    |\n" +
+                "+---------------------------------------------+");
 
         Booking.menu();
     }
@@ -220,13 +220,13 @@ public class Booking implements Serializable {
         if (!bookings.isEmpty()){
             int counter = 1;
             for (Booking booking : bookings){
-                System.out.println("\n-- Booking number " + counter);
+                System.out.println("\n-- Booking number " + counter + " --");
                 booking.printInfo();
                 counter++;
             }
-            System.out.println("\n· Enter the booking number ( -- ):");
+            System.out.println("\n· Enter the booking number:");
             int bookingToAddDaysTo = Main.userChoice();
-            System.out.println("\n· Enter the days to add to the booking:");
+            System.out.println("\n· Enter number of days to add to the booking:");
             int daysToAdd = Main.userChoice();
             Booking extended = bookings.get(bookingToAddDaysTo - 1);
             boolean canExtend = checkOverlap(extended.startDate, extended.endDate.plus(Period.ofDays(daysToAdd)), extended.room);

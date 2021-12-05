@@ -87,7 +87,8 @@ public class Room implements Serializable {
             System.out.println("\n----- Room options -----" +
                     "\n· 1. Create room" +
                     "\n· 2. Change room price" +
-                    "\n· 9. Go back");
+                    "\n· 9. Go back" +
+                    "\n" + Main.rooms);
 
             int answer = Main.userChoice();
 
@@ -260,7 +261,7 @@ public class Room implements Serializable {
         Room newRoom = new Room(roomNumber, roomFloor, roomName, roomInternet, roomPrice, roomBeds);
         Main.rooms.add(newRoom);
         System.out.println("\nYou have correctly created a new room:" +
-               newRoom.toString() );
+               newRoom );
 
         Room.menu();
     }
@@ -323,6 +324,6 @@ public class Room implements Serializable {
                 "\n- Floor = " + floor +
                 "\n- Wi-fi = " + internet +
                 "\n- Number of beds = " + numberOfBeds +
-                "\n- Price per Night = " + pricePerNight + "dkk per night";
+                "\n- Price per Night = " + pricePerNight + "dkk per night\n";
     }
 }

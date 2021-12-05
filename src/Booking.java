@@ -65,7 +65,7 @@ public class Booking implements Serializable {
         System.out.println("\n----- Create Booking -----" +
                 "\n· 1. Create booking" +
                 "\n· 2. Extend booking" +
-                "\n· Go back");
+                "\n· 9. Go back");
 
         int answer = Main.userChoice();
 

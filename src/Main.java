@@ -62,7 +62,8 @@ public class Main {
                     "\n· 2. Guest options" +
                     "\n· 3. Staff options" +
                     "\n· 4. Room options" +
-                    "\n· 9. Save Changes and Exit!");
+                    "\n· 9. Save Changes and Exit!" +
+                    "\n" + rooms);
 
             boolean keepAsking = true;
             while (keepAsking) {

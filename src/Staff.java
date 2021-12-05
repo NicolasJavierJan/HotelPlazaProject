@@ -54,7 +54,7 @@ public class Staff extends Person implements Serializable {
 
                 case 3:
                     keepAsking = false;
-                    Main.displayGuestList();
+                    Main.displayStaffList();
                     break;
 
                 case 9:
@@ -383,11 +383,11 @@ public class Staff extends Person implements Serializable {
 
     @Override
     public String toString() {
-        return "First name= " + firstName +
-                "\n- Last name= " + lastName +
-                "\n- Phone number= " + phoneNumber +
-                "\n- title=" + getTitle() +
-                "\n- salary=" + getSalary() + "DKK";
+        return "- First name = " + firstName +
+                "\n- Last name = " + lastName +
+                "\n- Phone number = +45 " + Main.phonePrint(phoneNumber)+
+                "\n- title = " + getTitle() +
+                "\n- salary = " + getSalary() + "DKK";
     }
 
 }

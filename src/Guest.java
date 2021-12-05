@@ -358,7 +358,7 @@ public class Guest extends Person implements Serializable {
     public String toString(){
         return "\n- First name= " + firstName +
                 "\n- Last name= " + lastName +
-                "\n- Phone number= " + Main.phonePrint(phoneNumber) +
+                "\n- Phone number= +45 " + Main.phonePrint(phoneNumber) +
                 "\n- Address= " + getAddress();
     }
 }

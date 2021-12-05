@@ -227,7 +227,7 @@ public class Main {
             Guest.menu();
         } else {
             for (int i = 0; i < Main.staffMembers.size(); i++){
-                System.out.println("\n" + (i+1) + ":" + Main.staffMembers.get(i));
+                System.out.println("\n" + (i+1) + ":\n" + Main.staffMembers.get(i));
             }
         }
         Staff.menu();
@@ -240,7 +240,7 @@ public class Main {
             Booking.menu();
         } else {
             for (int i = 0; i < Main.bookings.size(); i++){
-                System.out.println("\n" + (i+1) + ":" + Main.bookings.get(i));
+                System.out.println("\n" + (i+1) + ":\n" + Main.bookings.get(i));
             }
         }
         Booking.menu();

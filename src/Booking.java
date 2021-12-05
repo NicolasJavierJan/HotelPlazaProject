@@ -65,6 +65,7 @@ public class Booking implements Serializable {
         System.out.println("\n----- Create Booking -----" +
                 "\n· 1. Create booking" +
                 "\n· 2. Extend booking" +
+                "\n· 3. Display bookings list" +
                 "\n· 9. Go back");
 
         int answer = Main.userChoice();
@@ -73,6 +74,8 @@ public class Booking implements Serializable {
             Booking.createBooking();
         } else if (answer == 2) {
             Booking.editBooking();
+        }else if (answer == 3){
+            Main.displayBookingList();
         } else if (answer == 9) {
             Main.menu();
         }
@@ -148,16 +151,16 @@ public class Booking implements Serializable {
 
         boolean startYearLoop = true;
         while (startYearLoop) {
-            System.out.println("\n· Enter year");
+            System.out.println("\n· Enter year:");
             startYear = Main.userChoice();
-            if (startYear <= 2025 && startYear >= 2021) {
+            if (startYear <= 2030 && startYear > 2021) {
                 startYearLoop = false;
             } else {
-                System.out.println("\n ! Invalid answer. Impossible to enter a year previous to 2021 !");
+                System.out.println("\n ! Invalid answer. Impossible to enter a year previous to 2022 !");
             }
         }
 
-        System.out.println("\n· Enter number of nights");
+        System.out.println("\n· Enter number of nights:");
         numberOfNights = Main.userChoice();
         if (numberOfNights < 1){
             System.out.println("\n ! Invalid answer. Please try again ! ");
@@ -179,26 +182,35 @@ public class Booking implements Serializable {
         Booking newBooking = new Booking(start, end, numberOfNights, room, guest);
         room.getBookings().add(newBooking);
         Main.bookings.add(newBooking);
-        System.out.println("+-------------------------------------+\n" +
-                "|                                     |\n" +
-                "|             HOTEL PLAZA             |\n" +
-                "|                                     |\n" +
-                "|  " + room.getRoomName() + " Price per night: " + (room.getPricePerNight() * numberOfNights) + "  |\n" +
-                "|  TOTAL                     " + room.getPricePerNight() * numberOfNights + "    |\n" +
-                "|                                     |\n" +
-                "|                                     |\n" +
-                "|                                     |\n" +
-                "|             THANK YOU!              |\n" +
-                "+-------------------------------------+");
+        System.out.println("+-----------------------------------------+\n" +
+                "|                                         |\n" +
+                "|               HOTEL PLAZA               |\n" +
+                "|                                         |\n" +
+                "|    " + room.getRoomName() + " Price per night: " + (room.getPricePerNight() * numberOfNights) + "dkk     |\n" +
+                "|    TOTAL:                    " + room.getPricePerNight() * numberOfNights + "dkk       |\n" +
+                "|                                         |\n" +
+                "|                                         |\n" +
+                "|                                         |\n" +
+                "|               THANK YOU!                |\n" +
+                "+-----------------------------------------+");
 
-        Main.menu();
+        Booking.menu();
     }
 
     public static void editBooking(){
-        System.out.println("Enter the Guest last name");
+
+        System.out.println("\n· Choose Guest last name from the list:");
+        for (Guest guest : Main.guests){
+            System.out.println("[" + guest.lastName + "]");
+        }
         String lastName = Main.userString();
-        System.out.println("Enter the Guest first name");
+
+        System.out.println("\n· Choose guest first name from the list:");
+        for (Guest guest : Main.guests){
+            System.out.println("[" + guest.firstName + "]");
+        }
         String firstName = Main.userString();
+
         ArrayList<Booking> bookings = new ArrayList<>();
         for (Booking booking : Main.bookings){
             if (booking.guest.firstName.equalsIgnoreCase(firstName) && booking.guest.lastName.equalsIgnoreCase(lastName)){
@@ -208,13 +220,13 @@ public class Booking implements Serializable {
         if (!bookings.isEmpty()){
             int counter = 1;
             for (Booking booking : bookings){
-                System.out.println("Booking number " + counter);
+                System.out.println("\n-- Booking number " + counter);
                 booking.printInfo();
                 counter++;
             }
-            System.out.println("Please enter the number of the booking to add days to:");
+            System.out.println("\n· Enter the booking number ( -- ):");
             int bookingToAddDaysTo = Main.userChoice();
-            System.out.println("Please enter the days to add to the booking:");
+            System.out.println("\n· Enter the days to add to the booking:");
             int daysToAdd = Main.userChoice();
             Booking extended = bookings.get(bookingToAddDaysTo - 1);
             boolean canExtend = checkOverlap(extended.startDate, extended.endDate.plus(Period.ofDays(daysToAdd)), extended.room);
@@ -222,14 +234,15 @@ public class Booking implements Serializable {
                 extended.endDate = extended.endDate.plus(Period.ofDays(daysToAdd));
                 extended.printInfo();
             } else {
-                System.out.println("This reservation cannot be extended.");
+                System.out.println("\n ! This reservation cannot be extended !");
                 Booking.menu();
             }
 
         } else {
-            System.out.println("There's no booking under that name.");
+            System.out.println("\n ! There's no booking under that name !");
             Booking.menu();
         }
+        Booking.menu();
     }
 
     public static int validateStartDate(int startDate, int startMonth) {
@@ -311,7 +324,7 @@ public class Booking implements Serializable {
                     }
                 }
                 if (overlap){
-                    System.out.println("There's no available Single Bed Rooms for that date.");
+                    System.out.println("\n ! There's no available Single Bed Rooms for that date !");
                 }
             } else if (answer == 2){
                 for (Room room : Main.rooms){
@@ -323,7 +336,7 @@ public class Booking implements Serializable {
                     }
                 }
                 if (overlap){
-                    System.out.println("There's no available Double Bed Rooms for that date.");
+                    System.out.println("\n !There's no available Double Bed Rooms for that date !");
                 }
             } else if (answer == 3) {
                 for (Room room : Main.rooms) {
@@ -335,13 +348,12 @@ public class Booking implements Serializable {
                     }
                 }
                 if (overlap) {
-                    System.out.println("There's no available Suite Rooms for that date.");
+                    System.out.println("\n ! There's no available Suite Rooms for that date ! ");
                 }
                 } else if (answer == 9){
-                    System.out.println("Going back to Menu");
                     Booking.menu();
                 } else {
-                System.out.println("Please press a valid option");
+                System.out.println("\n ! Please press a valid option !");
             }
         }
         return null;
@@ -360,17 +372,17 @@ public class Booking implements Serializable {
 
     public static Guest guestChecking(){
         if (Main.guests.isEmpty()){
-            System.out.println("There are no guests in the System. Please add Guests");
+            System.out.println("\n ! There are no guests in the System. Please add Guests ! ");
             Main.menu();
         }
-        System.out.println("Please choose guest lastname from the List");
+        System.out.println("\n· Choose guest lastname from the List:");
         Set<String> lastNames = new HashSet<>();
         for (Guest guest : Main.guests){
             lastNames.add(guest.lastName);
         }
         System.out.println(lastNames);
         String lastNameAnswer = Main.userString();
-        System.out.println("Please choose guest firstname from the List");
+        System.out.println("\n· Choose guest firstname from the List:");
         Set<String> firstNames = new HashSet<>();
         for (Guest guest: Main.guests){
             if (guest.lastName.equalsIgnoreCase(lastNameAnswer)){
@@ -395,7 +407,7 @@ public class Booking implements Serializable {
 
     @Override
     public String toString(){
-        return "Room= " + this.room.getRoomName() +
+        return "- Room= " + this.room.getRoomName() +
                 "\n- Room Number= " + this.room.getRoomNumber() +
                 "\n- Floor= " + this.room.getFloor() +
                 "\n- Guest= " + this.guest.firstName + " " + this.guest.lastName +

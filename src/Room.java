@@ -87,8 +87,8 @@ public class Room implements Serializable {
             System.out.println("\n----- Room options -----" +
                     "\n· 1. Create room" +
                     "\n· 2. Change room price" +
-                    "\n· 9. Go back" +
-                    "\n" + Main.rooms);
+                    "\n· 3. Display room list" +
+                    "\n· 9. Go back");
 
             int answer = Main.userChoice();
 
@@ -98,6 +98,9 @@ public class Room implements Serializable {
             } else if (answer == 2) {
                 keepAsking = false;
                 Room.changePriceMenu();
+            }else if (answer == 3){
+                keepAsking = false;
+                Main.displayRoomList();
             } else if (answer == 9) {
                 keepAsking = false;
                 Main.menu();
@@ -215,8 +218,6 @@ public class Room implements Serializable {
                 if (roomNumber == room.roomNumber){
                     System.out.println("\n ! Room already taken, try again !");
                     roomNumberLoop = true;
-                } else {
-                    roomNumberLoop = false;
                 }
             }
         }//roomNumberLoop closed
@@ -267,14 +268,11 @@ public class Room implements Serializable {
     }
 
     public static void changePriceMenu(){
-        System.out.println("\nRooms: ");
+        System.out.println("\n· 9 Go back" +
+                "\n· Choose a room from the list: ");
         for (Room room : Main.rooms){
-            System.out.println("-" + room.roomNumber);
+            System.out.println("- " + room.roomNumber);
         }
-
-        System.out.println("\n· 9. Go back" +
-                "\n· Enter room number:");
-
         int choice = Main.userChoice();
 
         if (choice == 9) {
@@ -310,6 +308,8 @@ public class Room implements Serializable {
             }
         }
     }
+
+
 
     @Override
     public String toString(){

@@ -21,9 +21,10 @@ public class Guest extends Person implements Serializable {
     public static void menu() {
 
         System.out.println("\n----- Guest Options -----" +
-                    "\n· 1. Create guest" +
-                    "\n· 2. Edit guest" +
-                    "\n· 9. Main menu");
+                "\n· 1. Create guest" +
+                "\n· 2. Edit guest" +
+                "\n· 3. Display guest list" +
+                "\n· 9. Main menu");
 
         boolean keepAsking= true;
         while (keepAsking) {
@@ -39,6 +40,11 @@ public class Guest extends Person implements Serializable {
                 case 2:
                     keepAsking = false;
                     modifyPerson();
+                    break;
+
+                case 3:
+                    keepAsking = false;
+                    Main.displayGuestList();
                     break;
 
                 case 9:
@@ -350,9 +356,9 @@ public class Guest extends Person implements Serializable {
 
     @Override
     public String toString(){
-        return "First name= " + firstName +
+        return "\n- First name= " + firstName +
                 "\n- Last name= " + lastName +
-                "\n- Phone number= " + phoneNumber +
+                "\n- Phone number= " + Main.phonePrint(phoneNumber) +
                 "\n- Address= " + getAddress();
     }
 }

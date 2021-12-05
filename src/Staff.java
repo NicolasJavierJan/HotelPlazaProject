@@ -31,9 +31,10 @@ public class Staff extends Person implements Serializable {
 
     public static void menu(){
         System.out.println("\n----- Staff Options -----" +
-                    "\n· 1. Create staff member" +
-                    "\n· 2. Edit staff member" +
-                    "\n· 9. Main menu");
+                "\n· 1. Create staff member" +
+                "\n· 2. Edit staff member" +
+                "\n· 3. Display staff members list" +
+                "\n· 9. Main menu");
 
         boolean keepAsking = true;
         while (keepAsking) {
@@ -49,6 +50,11 @@ public class Staff extends Person implements Serializable {
                 case 2:
                     keepAsking = false;
                     modifyPerson();
+                    break;
+
+                case 3:
+                    keepAsking = false;
+                    Main.displayGuestList();
                     break;
 
                 case 9:

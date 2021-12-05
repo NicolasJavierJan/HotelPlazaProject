@@ -11,13 +11,8 @@ public class Main {
     public static ArrayList<Room> rooms = new ArrayList<>();
 
     public static void main(String[] args) {
-        menu();
-    }
-
-    public static void menu(){
 
         // De-Serializing Code
-
         try {
             FileInputStream staffIn = new FileInputStream("src/Staff.ser");
             FileInputStream guestsIn = new FileInputStream("src/Guests.ser");
@@ -49,6 +44,11 @@ public class Main {
             c.printStackTrace();
         }
 
+        menu();
+    }
+
+
+    public static void menu(){
         // For checking that everything works correctly.
         /*
         System.out.println(Main.staffMembers);
@@ -62,8 +62,7 @@ public class Main {
                     "\n· 2. Guest options" +
                     "\n· 3. Staff options" +
                     "\n· 4. Room options" +
-                    "\n· 9. Save Changes and Exit!" +
-                    "\n" + rooms);
+                    "\n· 9. Save Changes and Exit!");
 
             boolean keepAsking = true;
             while (keepAsking) {
@@ -193,6 +192,58 @@ public class Main {
             }
         }
         return phonePrint;
+    }
+
+    public static void displayRoomList(){
+
+        if(Main.rooms.isEmpty()){
+            System.out.println("\n ! There are no rooms saved in the system. Create a room and come back later !");
+            Room.menu();
+        } else {
+            for (int i = 0; i < Main.rooms.size(); i++){
+                System.out.println("\n" + (i+1) + ":" + Main.rooms.get(i));
+            }
+        }
+        Room.menu();
+    }
+
+    public static void displayGuestList(){
+
+        if(Main.guests.isEmpty()){
+            System.out.println("\n ! There are no guests saved in the system. Create a guest and come back later !");
+            Guest.menu();
+        } else {
+            for (int i = 0; i < Main.guests.size(); i++){
+                System.out.println("\n" + (i+1) + ":" + Main.guests.get(i));
+            }
+        }
+        Guest.menu();
+    }
+
+    public static void displayStaffList(){
+
+        if(Main.staffMembers.isEmpty()){
+            System.out.println("\n ! There are no staff members saved in the system. Create a staff member and come back later !");
+            Guest.menu();
+        } else {
+            for (int i = 0; i < Main.staffMembers.size(); i++){
+                System.out.println("\n" + (i+1) + ":" + Main.staffMembers.get(i));
+            }
+        }
+        Staff.menu();
+    }
+
+    public static void displayBookingList(){
+
+        if(Main.bookings.isEmpty()){
+            System.out.println("\n ! There are no booking saved in the system. Create a booking and come back later !");
+            Booking.menu();
+        } else {
+            for (int i = 0; i < Main.bookings.size(); i++){
+                System.out.println("\n" + (i+1) + ":" + Main.bookings.get(i));
+            }
+        }
+        Booking.menu();
     }
 
 }

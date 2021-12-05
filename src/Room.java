@@ -266,50 +266,40 @@ public class Room implements Serializable {
     }
 
     public static void changePriceMenu(){
+        System.out.println("\nRooms: ");
+        for (Room room : Main.rooms){
+            System.out.println("-" + room.roomNumber);
+        }
 
-        System.out.println("\n· 1. Change room price" +
-                "\n· 9. Go back");
+        System.out.println("\n· 9. Go back" +
+                "\n· Enter room number:");
 
         int choice = Main.userChoice();
 
-        switch (choice){
-            case 1:
-                System.out.println("\nRooms: ");
-                for (Room room : Main.rooms){
-                    System.out.println("-" + room.roomNumber);
-                }
-                int answer = Main.userChoice();
-
-                if (answer == 9){
-                    menu();
-                }
-
-                boolean found = false;
-                for (Room room : Main.rooms){
-                    if (answer == room.roomNumber){
-
-                        found = true;
-                        System.out.println("\nRoom current price: " + room.pricePerNight + "dkk" +
-                                "\n· Enter new price:");
-                        int newPrice = Main.userChoice();
-
-                        room.setPricePerNight(newPrice);
-                        System.out.println("\nPrice correctly changed !" +
-                                "\n- Room " + room.getRoomNumber() + ": " + room.getPricePerNight() + "dkk per night");
-                        changePriceMenu();
-                    }
-                }
-
-                if (!found){
-                    System.out.println("\n! Room not found, try again !");
-                    changePriceMenu();
-                }
-                break;
-
-            case 9:
-                menu();
+        if (choice == 9) {
+            menu();
         }
 
+        boolean found = false;
+        for (Room room : Main.rooms){
+            if (choice == room.roomNumber){
+
+                found = true;
+                System.out.println("\nRoom current price: " + room.pricePerNight + "dkk" +
+                        "\n· Enter new price:");
+                int newPrice = Main.userChoice();
+
+                room.setPricePerNight(newPrice);
+                System.out.println("\nPrice correctly changed !" +
+                        "\n- Room " + room.getRoomNumber() + ": " + room.getPricePerNight() + "dkk per night");
+                changePriceMenu();
+            }
+        }
+
+        if (!found){
+            System.out.println("\n! Room not found, try again !");
+            changePriceMenu();
+        }
     }
 
     public static void changePrice(String typeOfRoom, int newPrice){

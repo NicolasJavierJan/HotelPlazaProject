@@ -108,8 +108,8 @@ public class Room implements Serializable {
 
     public static void createRoom(){
 
-        String roomType = "";
-        int roomName = 0;
+        String roomName = "";
+        int roomType = 0;
         int roomPrice = 0;
         int roomNumber = 0;
         int roomBeds = 0;
@@ -119,21 +119,21 @@ public class Room implements Serializable {
                 "\n· 1. Single bed (starting from 300dkk)" +
                 "\n· 2. Double bed (starting from 700dkk)" +
                 "\n· 3. Suite (starting from 1000dkk)");
-        roomName = Main.userChoice();
+        roomType = Main.userChoice();
 
-        switch (roomName){
+        switch (roomType){
             case 1:
-                roomType = "Single bed";
+                roomName = "Single bed";
                 roomPrice = 300;
                 break;
 
             case 2:
-                roomType = "Double bed";
+                roomName = "Double bed";
                 roomPrice = 700;
                 break;
 
             case 3:
-                roomType = "Suite";
+                roomName = "Suite";
                 roomPrice = 1000;
                 break;
         }
@@ -226,7 +226,7 @@ public class Room implements Serializable {
         boolean bedsLoop = true;
         while (bedsLoop) {
 
-            if (roomType.equalsIgnoreCase("suite")) {
+            if (roomName.equalsIgnoreCase("suite")) {
                 System.out.println("\n· How many beds in the room (max 6, 150 dkk each)?");
                 roomBeds = Main.userChoice();
                 if (roomBeds >= 2 && roomBeds <= 6 && roomInternet) {
@@ -241,14 +241,14 @@ public class Room implements Serializable {
                     System.out.println("\n ! Number of beds has to be between 2 and 6 !");
                 }
 
-            } else if (roomType.equalsIgnoreCase("single bed")) {
+            } else if (roomName.equalsIgnoreCase("single bed")) {
                 bedsLoop = false;
                 roomBeds = 1;
                 if (roomInternet){
                     roomPrice = roomPrice + 50;
                 }
 
-            } else if (roomType.equalsIgnoreCase("double bed")){
+            } else if (roomName.equalsIgnoreCase("double bed")){
                 bedsLoop = false;
                 roomBeds = 2;
                 if (roomInternet){
@@ -257,7 +257,7 @@ public class Room implements Serializable {
             }
         } // bedsLoop closed
 
-        Room newRoom = new Room(roomNumber, roomFloor, roomType, roomInternet, roomPrice, roomBeds);
+        Room newRoom = new Room(roomNumber, roomFloor, roomName, roomInternet, roomPrice, roomBeds);
         Main.rooms.add(newRoom);
         System.out.println("\nYou have correctly created a new room:" +
                newRoom.toString() );

@@ -118,14 +118,27 @@ public class Booking implements Serializable {
                 } else {
                     System.out.println("\n ! Invalid answer, try again !");
                 }
-            } else if (startDay == 31){
+            } else if (startDay == 31) {
                 System.out.println("\nChoose one of the following months:" +
                         "\n· 1. January" + "\n· 3. March" + "\n· 5. May" + "\n· 7. July" +
                         "\n· 8. August" + "\n· 10. October" + "\n· 12. December");
 
                 startMonth = Main.userChoice();
 
-                if (startMonth == 1 || startMonth == 3 || startMonth == 5  || startMonth == 7 || startMonth == 8 || startMonth == 10 || startMonth == 12 ){
+                if (startMonth == 1 || startMonth == 3 || startMonth == 5 || startMonth == 7 || startMonth == 8 || startMonth == 10 || startMonth == 12) {
+                    enterMonthLoop = false;
+                } else {
+                    System.out.println("\n ! Invalid answer, try again !");
+                }
+            } else if(startDay == 29){
+                System.out.println("\nChoose one of the following months:" +
+                        "\n· 1. January" + "\n· 3. March" + "\n· 4. April" + "\n· 5. May" + "\n· 6. June" +
+                        "\n· 7. July" + "\n· 8. August" + "\n· 9. September " + "\n· 10. October" + "\n· 11. November" + "\n· 12. December");
+
+                startMonth = Main.userChoice();
+
+                if (startMonth == 1  || startMonth == 3  || startMonth == 4 || startMonth == 5 || startMonth == 6 ||
+                        startMonth == 7 || startMonth == 8 || startMonth == 9 || startMonth == 10 || startMonth == 11 || startMonth == 12){
                     enterMonthLoop = false;
                 } else {
                     System.out.println("\n ! Invalid answer, try again !");
@@ -183,15 +196,17 @@ public class Booking implements Serializable {
         room.getBookings().add(newBooking);
         Main.bookings.add(newBooking);
         System.out.println("+---------------------------------------------+\n" +
-                "|                                             |\n" +
-                "|               HOTEL PLAZA                   |\n" +
-                "|                                             |\n" +
-                "|    " + room.getRoomName() + " Price per night: " + (room.getPricePerNight() * numberOfNights) + "dkk       |\n" +
-                "|    TOTAL:                     " + room.getPricePerNight() * numberOfNights + "dkk        |\n" +
-                "|                                             |\n" +
-                "|                                             |\n" +
-                "|                                             |\n" +
-                "|               THANK YOU!                    |\n" +
+                "                                             \n" +
+                "                 HOTEL PLAZA                 \n" +
+                "                                             \n" +
+                "    " + "Guest:                      " + guest.firstName + " " + guest.lastName+"         \n" +
+                "    " + "Room:                       " + room.getRoomNumber() + "         \n" +
+                "    " + room.getRoomName() + " Price per night: " + room.getPricePerNight() + "dkk         \n" +
+                "    TOTAL:                      " + (room.getPricePerNight() * numberOfNights) + "dkk         \n" +
+                "                                             \n" +
+                "                                             \n" +
+                "                                             \n" +
+                "                 THANK YOU!                  \n" +
                 "+---------------------------------------------+");
 
         Booking.menu();
